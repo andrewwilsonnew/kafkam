@@ -1,6 +1,6 @@
 package com.workday.kafka.server.avro;
 
-import com.cloudurable.phonebook.Employee;
+import com.workday.kafka.kafky.User;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -18,7 +18,7 @@ public class AvroConsumer {
     private final static String BOOTSTRAP_SERVERS = "localhost:9092";
     private final static String TOPIC = "new-employees";
 
-    private static Consumer<Long, Employee> createConsumer() {
+    private static Consumer<Long, User> createConsumer() {
         Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "KafkaExampleAvroConsumer");
@@ -47,19 +47,19 @@ public class AvroConsumer {
 
     public static void main(String... args) {
 
-        final Consumer<Long, Employee> consumer = createConsumer();
+        final Consumer<Long, User> consumer = createConsumer();
         consumer.subscribe(Collections.singletonList(TOPIC));
 
         IntStream.range(1, 100).forEach(index -> {
 
-            final ConsumerRecords<Long, Employee> records =
+            final ConsumerRecords<Long, User> records =
                     consumer.poll(100);
 
             if (records.count() == 0) {
                 System.out.println("None found");
             } else records.forEach(record -> {
 
-                Employee employeeRecord = record.value();
+                User employeeRecord = record.value();
 
                 System.out.printf("%s %d %d %s \n", record.topic(),
                         record.partition(), record.offset(), employeeRecord);

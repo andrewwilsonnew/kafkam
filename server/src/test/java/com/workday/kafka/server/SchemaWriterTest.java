@@ -1,7 +1,6 @@
 package com.workday.kafka.server;
 
-import com.cloudurable.phonebook.Employee;
-import com.cloudurable.phonebook.PhoneNumber;
+import com.workday.kafka.kafky.User;
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -18,11 +17,7 @@ import java.util.stream.IntStream;
  */
 public class SchemaWriterTest {
 
-
-
-    public class AvroProducer {
-
-        private static Producer<Long, Employee> createProducer() {
+        private static Producer<Long, User> createProducer() {
             Properties props = new Properties();
             props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
             props.put(ProducerConfig.CLIENT_ID_CONFIG, "AvroProducer");
@@ -44,22 +39,11 @@ public class SchemaWriterTest {
 
         public static void main(String... args) {
 
-            Producer<Long, Employee> producer = createProducer();
-
-            Employee bob = Employee.newBuilder().setAge(35)
-                    .setFirstName("Bob")
-                    .setLastName("Jones")
-                    .setPhoneNumber(
-                            PhoneNumber.newBuilder()
-                                    .setAreaCode("301")
-                                    .setCountryCode("1")
-                                    .setPrefix("555")
-                                    .setNumber("1234")
-                                    .build())
-                    .build();
+            Producer<Long, User> producer = createProducer();
 
             IntStream.range(1, 100).forEach(index->{
-                producer.send(new ProducerRecord<>(TOPIC, 1L * index, bob));
+                User user = User.newBuilder().setId(index).setAmount(20.0*index).setTimestamp(7L*index).build();
+                producer.send(new ProducerRecord<>(TOPIC, 1L * index, user));
 
             });
 
@@ -67,5 +51,4 @@ public class SchemaWriterTest {
             producer.close();
         }
 
-    }
 }
