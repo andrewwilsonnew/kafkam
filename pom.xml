@@ -70,12 +70,28 @@
             <version>${kafka.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_${scala.version}</artifactId>
+            <classifier>test</classifier>
+            <version>${kafka.version}</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-streams -->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-streams</artifactId>
             <version>${kafka.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-streams-examples</artifactId>
+            <classifier>tests</classifier>
+            <version>${confluent.version}</version>
+        </dependency>
+
+
 
         <dependency>
             <groupId>org.apache.kafka</groupId>
@@ -86,6 +102,27 @@
         <dependency>
             <groupId>io.confluent</groupId>
             <artifactId>kafka-avro-serializer</artifactId>
+            <version>${confluent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-streams-examples</artifactId>
+            <classifier>tests</classifier>
+            <type>tests</type>
+            <version>${confluent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-schema-registry</artifactId>
+            <version>${confluent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-schema-registry</artifactId>
+            <classifier>tests</classifier>
             <version>${confluent.version}</version>
         </dependency>
 
